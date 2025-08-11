@@ -1,7 +1,7 @@
-1. Project Title
+1. Project Title:
 Health Tracker
 
-2. Your Name & Roll Number
+2. Your Name & Roll Number:
 Ipshita Patel – 2024B-28082005A
 
 3. Problem Statement
