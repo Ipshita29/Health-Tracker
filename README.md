@@ -4,7 +4,7 @@
 ---
 ## TECH-STACK
 The Tech-Stack I will be using includes:
-- **Frontend:** JavaScript,React
+- **Frontend:** React Native
 - **Backend:** Node.js
 - **Database:** MongoDB
 ---
