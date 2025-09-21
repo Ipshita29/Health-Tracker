@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, TextInput, StyleSheet, Text ,TouchableOpacity,Alert} from "react-native";
 
-export default function SignIn() {
+export default function SignIn({navigation}) {
   const [username, setUsername] = useState("");
   const [pass, setPass] = useState("");
 
@@ -9,8 +9,9 @@ export default function SignIn() {
     if (!username || !pass) {
       Alert.alert("Error", "Please enter both username and password.");
     } else {
-      Alert.alert("Success", `Welcome ${username}!`);
-      // later you can navigate to another screen here
+      Alert.alert("Success", `Welcome ${username}!`,[{
+        text:"OK",onPress:()=>navigation.navigate("Details")
+      }]);
     }
   };
   return (
