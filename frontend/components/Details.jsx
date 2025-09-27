@@ -214,7 +214,7 @@ export default function Details({navigation}) {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#f5f3ff", 
+    backgroundColor: "#f4f5f7", // light gray background
   },
   scrollViewContainer: {
     padding: 20,
@@ -223,26 +223,26 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: "800",
-    color: "#4C1D95",
+    color: "#1e1e2f", // dark gray
     marginBottom: 25,
     textAlign: "center",
     letterSpacing: 0.5,
   },
   section: {
     backgroundColor: "#fff",
-    borderRadius: 18,
+    borderRadius: 16,
     padding: 18,
     marginBottom: 22,
-    shadowColor: "#7B2CBF",
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.08,
     shadowRadius: 6,
     elevation: 4,
   },
   sectionTitle: {
     fontSize: 20,
     fontWeight: "600",
-    color: "#4C1D95",
+    color: "#2f2f3d", // muted dark color
     marginBottom: 15,
   },
   inputGroup: {
@@ -254,16 +254,18 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 16,
     zIndex: 1,
+    color: "#4b4b5a",
   },
   input: {
     flex: 1,
     padding: 14,
     paddingLeft: 48,
     borderWidth: 1,
-    borderColor: "#c4a6f7",
+    borderColor: "#d1d2d6",
     borderRadius: 12,
-    backgroundColor: "#faf9ff",
+    backgroundColor: "#fdfdfd",
     fontSize: 16,
+    color: "#1e1e2f",
   },
   textArea: {
     height: 95,
@@ -273,11 +275,11 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 16,
     borderRadius: 14,
-    backgroundColor: "#7B2CBF",
+    backgroundColor: "#00a8ff", // modern blue
     alignItems: "center",
     marginTop: 10,
     marginBottom: 35,
-    shadowColor: "#4C1D95",
+    shadowColor: "#00a8ff",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.25,
     shadowRadius: 6,
