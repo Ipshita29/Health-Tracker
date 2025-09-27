@@ -3,7 +3,7 @@ import {View,TextInput,StyleSheet,Text,TouchableOpacity,ScrollView,Alert,Keyboar
 import { SafeAreaView } from "react-native-safe-area-context";
 import {FontAwesome5,MaterialCommunityIcons,MaterialIcons,Ionicons} from "@expo/vector-icons";
 
-export default function Details() {
+export default function Details({navigation}) {
   const [formData, setFormData] = useState({
     age: "",
     weight: "",
@@ -30,7 +30,8 @@ export default function Details() {
       return;
     }
     console.log("Saving user details:", formData);
-    Alert.alert("Success", "Your details have been saved!");
+    Alert.alert("Success", "Your details have been saved!")
+    navigation.navigate("Dashboard", { userData: formData });
   };
 
   return (
