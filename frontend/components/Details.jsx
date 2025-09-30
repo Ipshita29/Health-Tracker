@@ -9,12 +9,12 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
-  Switch, // Import Switch for the new feature
+  Image, 
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 
-// --- Custom Component for Input Fields (Simpler and Cleaner) ---
+
 const CustomInput = ({ iconName, label, placeholder, value, onChangeText, keyboardType = 'default', isMultiline = false }) => (
   <View style={styles.inputGroup}>
     <MaterialCommunityIcons name={iconName} size={20} color="#007AFF" style={styles.inputIcon} />
@@ -43,8 +43,6 @@ export default function Details({ navigation }) {
     sleepHours: "7.5",
     gymTime: "",
     medTime: "",
-    smoke: false, // New state for Switch
-    drink: false, // New state for Switch
     other: "",
   };
   const [formData, setFormData] = useState(initialFormData);
@@ -53,9 +51,6 @@ export default function Details({ navigation }) {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleToggle = (name, value) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
 
   const handleReset = () => {
       Alert.alert(
@@ -76,7 +71,7 @@ export default function Details({ navigation }) {
       );
       return;
     }
-    // Simple mock save logic
+    
     Alert.alert("Success!", "Your health profile has been updated!", [
         { text: "OK", onPress: () => navigation.navigate("Dashboard", { userData: formData }) }
     ]);
@@ -195,6 +190,8 @@ export default function Details({ navigation }) {
             </TouchableOpacity>
           </View>
           
+          <Image source={require('../assets/water.png')} style={{height:150,width:350}}/>
+
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -204,7 +201,7 @@ export default function Details({ navigation }) {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#F5F8FA", // Very light, professional background
+    backgroundColor: "#F5F8FA", 
   },
   scrollViewContainer: {
     padding: 18,
@@ -213,7 +210,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: "800",
-    color: "#1A237E", // Deep blue/primary color
+    color: "#1A237E", 
     marginBottom: 4,
     textAlign: "center",
   },
@@ -224,7 +221,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   
-  // --- CARD STYLES ---
+  
   sectionCard: {
     backgroundColor: "#fff",
     borderRadius: 15,
@@ -236,7 +233,7 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     elevation: 8,
     borderLeftWidth: 5,
-    borderLeftColor: '#007AFF', // Feature highlight
+    borderLeftColor: '#007AFF', 
   },
   sectionTitle: {
     fontSize: 18,
@@ -248,7 +245,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   
-  // --- INPUT STYLES (Used by CustomInput) ---
+ 
   inputGroup: {
     flexDirection: "row",
     alignItems: "flex-start",
@@ -278,7 +275,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     fontSize: 16,
     color: "#1e1e2f",
-    paddingTop: Platform.OS === 'ios' ? 4 : 0, // OS specific adjustment
+    paddingTop: Platform.OS === 'ios' ? 4 : 0, 
   },
   textArea: {
     height: 90,
@@ -286,7 +283,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   
-  // --- TOGGLE STYLES ---
+ 
   toggleRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -309,29 +306,25 @@ const styles = StyleSheet.create({
   divider: {
     height: 1,
     backgroundColor: '#F0F0F5',
-    marginVertical: 15,
+    marginVertical: 5,
   },
   
-  // --- BUTTON STYLES ---
+
   buttonContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      marginTop: 15,
-      marginBottom: 35,
+      marginTop: 1,
+      marginBottom: 20,
   },
   saveButton: {
     flex: 2.5,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 18,
+    padding: 10,
     borderRadius: 12,
-    backgroundColor: "#007AFF", // Primary save color
+    backgroundColor: "#007AFF", 
     shadowColor: "#007AFF",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 10,
-    elevation: 8,
   },
   saveButtonText: {
     color: "#FFF",
@@ -343,7 +336,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 18,
+    padding: 10,
     borderRadius: 12,
     backgroundColor: "#FFF",
     borderWidth: 1,

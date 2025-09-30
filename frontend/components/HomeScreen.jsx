@@ -45,21 +45,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start', 
     padding: 25,
-    paddingTop: 80, 
+    paddingTop: 150, 
   },
   
 
   imageWrapper: {
     height: 250,
     width: 250,
-    marginBottom: 35,
+    marginBottom: 25,
     borderRadius: 125,
     backgroundColor: '#E6F0FF', 
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#007AFF',
+    shadowColor: '#5100ffff',
     shadowOpacity: 0.15,
-    shadowOffset: { width: 0, height: 8 },
     shadowRadius: 15,
     elevation: 10,
   },
@@ -69,20 +68,19 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   
-  
   title: {
     fontSize: 36,
     fontWeight: '800',
     color: '#1A237E', 
-    marginBottom: 10,
+    marginBottom: 5,
   },
   subtitle: {
     fontSize: 17,
     color: '#555',
     textAlign: 'center',
-    marginBottom: 50, 
-    lineHeight: 24,
-    maxWidth: 350,
+    marginBottom: 30, 
+    lineHeight: 20,
+    maxWidth: 250,
   },
   
   
@@ -93,17 +91,15 @@ const styles = StyleSheet.create({
   
 
   loginButton: {
-    width: '90%', // Wider button
-    padding: 18,
+    width: '90%', 
+    padding: 12,
     borderRadius: 15, 
     alignItems: 'center',
     marginBottom: 15,
-    backgroundColor: '#007AFF', 
-    shadowColor: '#007AFF',
-    shadowOpacity: 0.4,
-    shadowOffset: { width: 0, height: 6 },
+    backgroundColor: '#8972d6ff', 
+    shadowColor: '#a57fe7ff',
+    shadowOpacity: 0.6,
     shadowRadius: 12,
-    elevation: 8,
   },
   loginButtonText: {
     fontSize: 18,
@@ -114,17 +110,16 @@ const styles = StyleSheet.create({
   
   signupButton: {
     width: '90%',
-    padding: 18,
+    padding: 10,
     borderRadius: 15,
     alignItems: 'center',
     backgroundColor: 'transparent',
     borderWidth: 2,
-    borderColor: '#007AFF',
-    marginBottom: 15,
+    borderColor: '#8972d6ff',
   },
   signupButtonText: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#007AFF', 
+    color: '#8972d6ff', 
   },
 });

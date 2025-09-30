@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 import { View, TextInput, StyleSheet, Text ,TouchableOpacity,Alert} from "react-native";
-import AsyncStorage from '@react-native-async-storage/async-storage'; // <-- Import AsyncStorage
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SignIn({navigation}) {
   const [username, setUsername] = useState("");
   const [pass, setPass] = useState("");
 
-  const handleSignup = async () => { // <-- Made function async
+  const handleSignup = async () => {
     if (!username || !pass) {
       Alert.alert("Error", "Please enter both username and password.");
       return;
     }
-    
-    // 1. Check if username already exists (simulating database check)
     try {
         const storedPassword = await AsyncStorage.getItem(username);
         if (storedPassword !== null) {
@@ -23,9 +21,8 @@ export default function SignIn({navigation}) {
         console.error("AsyncStorage error during lookup:", error);
     }
     
-    // 2. Store the new user data
     try {
-      await AsyncStorage.setItem(username, pass); // Key: username, Value: password
+      await AsyncStorage.setItem(username, pass); 
       console.log(`User ${username} successfully registered.`);
       
       Alert.alert("Success!", "Account created. Now let's set up your profile.", [
@@ -40,13 +37,13 @@ export default function SignIn({navigation}) {
   
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sign Up</Text> {/* Changed 'Sign In' to 'Sign Up' */}
+      <Text style={styles.title}>Sign Up</Text> 
       <TextInput
         style={styles.input}
         placeholder="Choose Username"
         value={username}
         onChangeText={setUsername}
-        autoCapitalize="none" // Best practice for usernames
+        autoCapitalize="none" 
       />
       <TextInput
         style={styles.input}
@@ -95,10 +92,10 @@ const styles = StyleSheet.create({
     width: "85%",
     padding: 16,
     borderRadius: 14,
-    backgroundColor: "#00a8ff", 
+    backgroundColor: "#8972d6ff", 
     alignItems: "center",
     marginTop: 10,
-    shadowColor: "#00a8ff",
+    shadowColor: "#8972d6ff",
     shadowOpacity: 0.3,
     shadowOffset: { width: 0, height: 4 },
     shadowRadius: 6,

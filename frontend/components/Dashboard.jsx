@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from "react-native";
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions,Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ProgressBar } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -43,6 +43,19 @@ export default function Dashboard({ navigation }) {
         <Text style={styles.heading}>Hi {name} 👋</Text>
         <Text style={styles.subtext}>Your health summary today</Text>
 
+        <Image source={require('../assets/exercise.png')} style={{height:150,width:350}}/>
+
+        <Text style={styles.sectionTitle}>Daily Goal</Text>
+        <ProgressBar
+          progress={todayStats.goal}
+          color="#4CAF50"
+          style={styles.bar}
+        />
+        <Text style={styles.percent}>
+          {Math.round(todayStats.goal * 100)}% achieved
+        </Text>
+        
+
 
         <View style={styles.row}>
           <View style={[styles.card, { backgroundColor: "#E8F5E9" }]}>
@@ -60,7 +73,7 @@ export default function Dashboard({ navigation }) {
 
         <View style={styles.row}>
           <View style={[styles.card, { backgroundColor: "#E3F2FD" }]}>
-            <MaterialCommunityIcons name="water-outline" size={24} color="#2196F3" style={styles.iconStyle} />
+            <MaterialCommunityIcons name="water-outline" size={24} color="#8972d6ff" style={styles.iconStyle} />
             <Text style={styles.label}>Water</Text>
             <Text style={styles.value}>{todayStats.water} glasses</Text>
           </View>
@@ -89,7 +102,7 @@ export default function Dashboard({ navigation }) {
                     propsForDots: {
                         r: "6",
                         strokeWidth: "2",
-                        stroke: "#4CAF50"
+                        stroke: "#493181ff"
                     }
                 }}
                 bezier
@@ -101,25 +114,13 @@ export default function Dashboard({ navigation }) {
         </View>
 
         
-        
-        <Text style={styles.sectionTitle}>Daily Goal</Text>
-        <ProgressBar
-          progress={todayStats.goal}
-          color="#4CAF50"
-          style={styles.bar}
-        />
-        <Text style={styles.percent}>
-          {Math.round(todayStats.goal * 100)}% achieved
-        </Text>
-        
-        
         <Text style={styles.sectionTitle}>Recent Activities</Text>
         {RECENT_ACTIVITY.map((activity) => (
           <View key={activity.id} style={styles.activityCard}>
             <MaterialCommunityIcons 
                 name={activity.icon} 
                 size={28} 
-                color="#007AFF" 
+                color="#8972d6ff" 
                 style={{ marginRight: 15 }} 
             />
             <View style={{ flex: 1 }}>
@@ -132,7 +133,7 @@ export default function Dashboard({ navigation }) {
 
         {/* 3. Health Tip/Quote */}
         <View style={styles.tipCard}>
-            <MaterialCommunityIcons name="lightbulb-on-outline" size={22} color="#007AFF" style={{ marginRight: 10 }} />
+            <MaterialCommunityIcons name="lightbulb-on-outline" size={22} color="#8972d6ff" style={{ marginRight: 10 }} />
             <Text style={styles.tipText}>
                 {HEALTH_TIP}
             </Text>
@@ -157,16 +158,16 @@ export default function Dashboard({ navigation }) {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#F5F5F5", // Lighter background
+    backgroundColor: "#F5F5F5", 
   },
   wrapper: {
     padding: 18,
   },
   heading: {
-    fontSize: 28, // Slightly larger
-    fontWeight: "800", // Bolder
+    fontSize: 28, 
+    fontWeight: "800", 
     marginBottom: 4,
-    color: "#1A237E", // Darker primary color
+    color: "#8972d6ff", 
   },
   subtext: {
     fontSize: 16,
@@ -176,16 +177,16 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 16, // Increased spacing
+    marginBottom: 16,
   },
   card: {
     flex: 1,
     paddingVertical: 20,
     paddingHorizontal: 16,
     marginHorizontal: 4,
-    borderRadius: 16, // More rounded corners
+    borderRadius: 16, 
     shadowColor: "#000",
-    shadowOpacity: 0.1, // Stronger shadow
+    shadowOpacity: 0.1, 
     shadowRadius: 8,
     elevation: 5,
   },
@@ -199,11 +200,11 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   value: {
-    fontSize: 22, // Slightly larger value text
+    fontSize: 22, 
     fontWeight: "700",
     color: "#111",
   },
-  sectionTitle: { // Renamed from progressTitle for generic use
+  sectionTitle: { 
     marginTop: 25,
     fontSize: 18,
     fontWeight: "700",
@@ -221,7 +222,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   
-  // --- NEW STYLES ---
+
   activityCard: {
     flexDirection: "row",
     alignItems: "center",
@@ -234,7 +235,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     elevation: 2,
     borderLeftWidth: 5,
-    borderLeftColor: '#007AFF', // Highlight border
+    borderLeftColor: '#8972d6ff', 
   },
   activityTitle: {
     fontSize: 16,
@@ -249,29 +250,29 @@ const styles = StyleSheet.create({
   tipCard: {
     flexDirection: "row",
     alignItems: "flex-start",
-    backgroundColor: "#E0F7FA", // Light, calming color
+    backgroundColor: "#E0F7FA", 
     padding: 15,
     borderRadius: 12,
     marginTop: 25,
     marginBottom: 20,
     borderLeftWidth: 4,
-    borderLeftColor: '#00BCD4',
+    borderLeftColor: '#dfbef0ff',
   },
   tipText: {
     flex: 1,
     fontSize: 14,
-    color: "#006064",
+    color: "#55056dff",
     lineHeight: 20,
   },
   detailsButton: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: "#007AFF", 
+    backgroundColor: "#8972d6ff", 
     padding: 18,
     borderRadius: 12,
     marginTop: 20,
-    shadowColor: "#007AFF",
+    shadowColor: "#8972d6ff",
     shadowOpacity: 0.4,
     shadowOffset: { width: 0, height: 6 },
     shadowRadius: 10,

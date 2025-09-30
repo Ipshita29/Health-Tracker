@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {View,TextInput,StyleSheet,Text,TouchableOpacity,Alert} from "react-native";
-import AsyncStorage from '@react-native-async-storage/async-storage'; // <-- Import AsyncStorage
+import AsyncStorage from '@react-native-async-storage/async-storage'; 
 
 export default function Login({navigation}) {
   const [username, setUsername] = useState("");
@@ -54,7 +54,6 @@ export default function Login({navigation}) {
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
       
-      {/* Added link to signup for better UX */}
       <TouchableOpacity onPress={() => navigation.navigate("SignIn")} style={styles.signupLink}>
         <Text style={styles.signupText}>Don't have an account? Sign Up</Text>
       </TouchableOpacity>
@@ -96,10 +95,10 @@ const styles = StyleSheet.create({
     width: "85%",
     padding: 16,
     borderRadius: 14,
-    backgroundColor: "#00a8ff", 
+    backgroundColor: "#8972d6ff", 
     alignItems: "center",
     marginTop: 10,
-    shadowColor: "#00a8ff",
+    shadowColor: "#8972d6ff",
     shadowOpacity: 0.3,
     shadowOffset: { width: 0, height: 4 },
     shadowRadius: 6,
@@ -115,7 +114,7 @@ const styles = StyleSheet.create({
       padding: 10,
   },
   signupText: {
-      color: '#007AFF',
+      color: '#8972d6ff',
       fontSize: 16,
       fontWeight: '600',
   }
