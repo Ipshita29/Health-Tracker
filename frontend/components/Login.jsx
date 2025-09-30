@@ -9,9 +9,7 @@ export default function Login({navigation}) {
       if (!username || !pass) {
         Alert.alert("Error", "Please enter valid username and password.");
       } else {
-        Alert.alert("Success", `Welcome back ${username}!`,[
-            {text:"OK",onPress:()=>navigation.navigate("Details")}
-        ]);
+        navigation.navigate("Dashboard")
       }
     };
 

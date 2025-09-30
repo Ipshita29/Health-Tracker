@@ -9,9 +9,7 @@ export default function SignIn({navigation}) {
     if (!username || !pass) {
       Alert.alert("Error", "Please enter both username and password.");
     } else {
-      Alert.alert("Success", `Welcome ${username}!`,[{
-        text:"OK",onPress:()=>navigation.navigate("Details")
-      }]);
+      navigation.navigate("Details")
     }
   };
   return (

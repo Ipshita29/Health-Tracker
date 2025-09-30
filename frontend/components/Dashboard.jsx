@@ -1,10 +1,32 @@
-import React from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import React, { useEffect } from "react";
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ProgressBar } from "react-native-paper";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { LineChart } from "react-native-chart-kit";
 
-export default function Dashboard() {
-  // mock user + stats (later connect with backend)
+const HEALTH_TIP = "Stay hydrated! Aim for 8 glasses of water daily to boost energy and focus.";
+
+const RECENT_ACTIVITY = [
+  { id: 1, type: "Run", duration: "30 min", calories: 350, icon: "run" },
+  { id: 2, type: "Weights", duration: "45 min", calories: 400, icon: "dumbbell" },
+];
+const WEEKLY_STEPS_DATA = {
+    labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    datasets: [
+        {
+            data: [
+                5000, 6200, 4800, 7500, 8100, 10500, 5600
+            ],
+            color: (opacity = 1) => `rgba(76, 175, 80, ${opacity})`,
+            strokeWidth: 2,
+        },
+    ],
+};
+
+
+export default function Dashboard({ navigation }) {
+
   const name = "Ipshita";
   const todayStats = {
     steps: 5600,
@@ -17,36 +39,70 @@ export default function Dashboard() {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.wrapper}>
-        {/* greeting */}
+      
         <Text style={styles.heading}>Hi {name} 👋</Text>
         <Text style={styles.subtext}>Your health summary today</Text>
 
-        {/* row 1 */}
+
         <View style={styles.row}>
           <View style={[styles.card, { backgroundColor: "#E8F5E9" }]}>
+            <MaterialCommunityIcons name="foot-print" size={24} color="#4CAF50" style={styles.iconStyle} />
             <Text style={styles.label}>Steps</Text>
             <Text style={styles.value}>{todayStats.steps}</Text>
           </View>
           <View style={[styles.card, { backgroundColor: "#FFF3E0" }]}>
+            <MaterialCommunityIcons name="fire" size={24} color="#FF9800" style={styles.iconStyle} />
             <Text style={styles.label}>Calories</Text>
             <Text style={styles.value}>{todayStats.calories} kcal</Text>
           </View>
         </View>
 
-        {/* row 2 */}
+
         <View style={styles.row}>
           <View style={[styles.card, { backgroundColor: "#E3F2FD" }]}>
+            <MaterialCommunityIcons name="water-outline" size={24} color="#2196F3" style={styles.iconStyle} />
             <Text style={styles.label}>Water</Text>
             <Text style={styles.value}>{todayStats.water} glasses</Text>
           </View>
           <View style={[styles.card, { backgroundColor: "#F3E5F5" }]}>
+            <MaterialCommunityIcons name="sleep" size={24} color="#9C27B0" style={styles.iconStyle} />
             <Text style={styles.label}>Sleep</Text>
             <Text style={styles.value}>{todayStats.sleep} hrs</Text>
           </View>
         </View>
+        <Text style={styles.sectionTitle}>Weekly Steps Progress</Text>
+        <View style={styles.chartContainer}>
+            <LineChart
+                data={WEEKLY_STEPS_DATA}
+                width={Dimensions.get("window").width - 36}
+                height={220}
+                chartConfig={{
+                    backgroundColor: "#FFFFFF",
+                    backgroundGradientFrom: "#FFFFFF",
+                    backgroundGradientTo: "#FFFFFF",
+                    decimalPlaces: 0,
+                    color: (opacity = 1) => `rgba(26, 35, 126, ${opacity})`,
+                    labelColor: (opacity = 1) => `rgba(102, 102, 102, ${opacity})`,
+                    style: {
+                        borderRadius: 16
+                    },
+                    propsForDots: {
+                        r: "6",
+                        strokeWidth: "2",
+                        stroke: "#4CAF50"
+                    }
+                }}
+                bezier
+                style={{
+                    marginVertical: 8,
+                    borderRadius: 16,
+                }}
+            />
+        </View>
 
-        {/* progress */}
-        <Text style={styles.progressTitle}>Daily Goal</Text>
+        
+        
+        <Text style={styles.sectionTitle}>Daily Goal</Text>
         <ProgressBar
           progress={todayStats.goal}
           color="#4CAF50"
@@ -55,6 +111,44 @@ export default function Dashboard() {
         <Text style={styles.percent}>
           {Math.round(todayStats.goal * 100)}% achieved
         </Text>
+        
+        
+        <Text style={styles.sectionTitle}>Recent Activities</Text>
+        {RECENT_ACTIVITY.map((activity) => (
+          <View key={activity.id} style={styles.activityCard}>
+            <MaterialCommunityIcons 
+                name={activity.icon} 
+                size={28} 
+                color="#007AFF" 
+                style={{ marginRight: 15 }} 
+            />
+            <View style={{ flex: 1 }}>
+                <Text style={styles.activityTitle}>{activity.type}</Text>
+                <Text style={styles.activitySubtext}>{activity.duration} | Burned {activity.calories} kcal</Text>
+            </View>
+            <MaterialCommunityIcons name="chevron-right" size={24} color="#999" />
+          </View>
+        ))}
+
+        {/* 3. Health Tip/Quote */}
+        <View style={styles.tipCard}>
+            <MaterialCommunityIcons name="lightbulb-on-outline" size={22} color="#007AFF" style={{ marginRight: 10 }} />
+            <Text style={styles.tipText}>
+                {HEALTH_TIP}
+            </Text>
+        </View>
+
+        {/* 4. Add Details Button (Action Button) */}
+        <TouchableOpacity 
+            style={styles.detailsButton}
+            onPress={() => navigation.navigate("Details")} 
+        >
+            <MaterialCommunityIcons name="plus-circle-outline" size={20} color="#FFFFFF" style={{ marginRight: 8 }} />
+            <Text style={styles.detailsButtonText}>
+                Log New Activity or Metric
+            </Text>
+        </TouchableOpacity>
+
       </ScrollView>
     </SafeAreaView>
   );
@@ -63,60 +157,129 @@ export default function Dashboard() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#FAFAFA",
+    backgroundColor: "#F5F5F5", // Lighter background
   },
   wrapper: {
     padding: 18,
   },
   heading: {
-    fontSize: 26,
-    fontWeight: "700",
+    fontSize: 28, // Slightly larger
+    fontWeight: "800", // Bolder
     marginBottom: 4,
+    color: "#1A237E", // Darker primary color
   },
   subtext: {
-    fontSize: 15,
+    fontSize: 16,
     color: "#666",
-    marginBottom: 18,
+    marginBottom: 20,
   },
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 14,
+    marginBottom: 16, // Increased spacing
   },
   card: {
     flex: 1,
-    paddingVertical: 22,
-    paddingHorizontal: 14,
-    marginHorizontal: 5,
-    borderRadius: 14,
+    paddingVertical: 20,
+    paddingHorizontal: 16,
+    marginHorizontal: 4,
+    borderRadius: 16, // More rounded corners
     shadowColor: "#000",
-    shadowOpacity: 0.06,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowOpacity: 0.1, // Stronger shadow
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  iconStyle: {
+    marginBottom: 5,
   },
   label: {
-    fontSize: 15,
-    color: "#333",
-    marginBottom: 6,
+    fontSize: 14,
+    color: "#555",
+    marginBottom: 4,
+    fontWeight: "600",
   },
   value: {
-    fontSize: 20,
-    fontWeight: "600",
+    fontSize: 22, // Slightly larger value text
+    fontWeight: "700",
     color: "#111",
   },
-  progressTitle: {
-    marginTop: 20,
-    fontSize: 17,
-    fontWeight: "600",
-    marginBottom: 8,
+  sectionTitle: { // Renamed from progressTitle for generic use
+    marginTop: 25,
+    fontSize: 18,
+    fontWeight: "700",
+    marginBottom: 10,
+    color: "#333",
   },
   bar: {
-    height: 10,
-    borderRadius: 6,
+    height: 12,
+    borderRadius: 8,
   },
   percent: {
-    marginTop: 6,
-    fontSize: 15,
+    marginTop: 8,
+    fontSize: 16,
     color: "#444",
+    fontWeight: "500",
+  },
+  
+  // --- NEW STYLES ---
+  activityCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 10,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 3,
+    elevation: 2,
+    borderLeftWidth: 5,
+    borderLeftColor: '#007AFF', // Highlight border
+  },
+  activityTitle: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#333",
+  },
+  activitySubtext: {
+    fontSize: 13,
+    color: "#777",
+    marginTop: 2,
+  },
+  tipCard: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    backgroundColor: "#E0F7FA", // Light, calming color
+    padding: 15,
+    borderRadius: 12,
+    marginTop: 25,
+    marginBottom: 20,
+    borderLeftWidth: 4,
+    borderLeftColor: '#00BCD4',
+  },
+  tipText: {
+    flex: 1,
+    fontSize: 14,
+    color: "#006064",
+    lineHeight: 20,
+  },
+  detailsButton: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: "#007AFF", 
+    padding: 18,
+    borderRadius: 12,
+    marginTop: 20,
+    shadowColor: "#007AFF",
+    shadowOpacity: 0.4,
+    shadowOffset: { width: 0, height: 6 },
+    shadowRadius: 10,
+    elevation: 8,
+  },
+  detailsButtonText: {
+    color: "#FFFFFF",
+    fontSize: 17,
+    fontWeight: "700",
   },
 });
