@@ -155,6 +155,7 @@ export default function Details({ navigation }) {
           {/* SECTION 3: LIFESTYLE & NOTES */}
           <View style={styles.sectionCard}>
             <Text style={styles.sectionTitle}>Lifestyle & Reminders</Text>
+
             <View style={styles.divider} />
             
             <CustomInput

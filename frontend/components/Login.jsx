@@ -1,15 +1,35 @@
 import React, { useState } from "react";
-import { View, TextInput, StyleSheet, Text,TouchableOpacity,Alert } from "react-native";
+import {View,TextInput,StyleSheet,Text,TouchableOpacity,Alert} from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage'; // <-- Import AsyncStorage
 
 export default function Login({navigation}) {
   const [username, setUsername] = useState("");
   const [pass, setPass] = useState("");
 
-  const handleLogin = () => {
+  const handleLogin = async () => { 
       if (!username || !pass) {
         Alert.alert("Error", "Please enter valid username and password.");
-      } else {
-        navigation.navigate("Dashboard")
+        return;
+      }
+      
+      try {
+          const storedPassword = await AsyncStorage.getItem(username);
+          
+          if (storedPassword === null) {
+              Alert.alert("Login Failed", "Username not found. Please check your credentials or sign up.");
+              return;
+          }
+
+          if (storedPassword === pass) {
+              Alert.alert("Welcome Back!", `Logged in as ${username}.`);
+              navigation.navigate("Dashboard");
+          } else {
+              Alert.alert("Login Failed", "Incorrect password. Please try again.");
+          }
+
+      } catch (error) {
+          Alert.alert("Error", "An error occurred during login. Please try again.");
+          console.error("AsyncStorage error during login:", error);
       }
     };
 
@@ -21,6 +41,7 @@ export default function Login({navigation}) {
         placeholder="Username"
         value={username}
         onChangeText={setUsername}
+        autoCapitalize="none"
       />
       <TextInput
         style={styles.input}
@@ -30,8 +51,14 @@ export default function Login({navigation}) {
         secureTextEntry
       />
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text>Login</Text>
+        <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
+      
+      {/* Added link to signup for better UX */}
+      <TouchableOpacity onPress={() => navigation.navigate("SignIn")} style={styles.signupLink}>
+        <Text style={styles.signupText}>Don't have an account? Sign Up</Text>
+      </TouchableOpacity>
+      
     </View>
   );
 }
@@ -78,4 +105,18 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 5,
   },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '700',
+  },
+  signupLink: {
+      marginTop: 25,
+      padding: 10,
+  },
+  signupText: {
+      color: '#007AFF',
+      fontSize: 16,
+      fontWeight: '600',
+  }
 });

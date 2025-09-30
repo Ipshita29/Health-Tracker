@@ -1,35 +1,62 @@
 import React, { useState } from "react";
 import { View, TextInput, StyleSheet, Text ,TouchableOpacity,Alert} from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage'; // <-- Import AsyncStorage
 
 export default function SignIn({navigation}) {
   const [username, setUsername] = useState("");
   const [pass, setPass] = useState("");
 
-  const handleSignup = () => {
+  const handleSignup = async () => { // <-- Made function async
     if (!username || !pass) {
       Alert.alert("Error", "Please enter both username and password.");
-    } else {
-      navigation.navigate("Details")
+      return;
+    }
+    
+    // 1. Check if username already exists (simulating database check)
+    try {
+        const storedPassword = await AsyncStorage.getItem(username);
+        if (storedPassword !== null) {
+            Alert.alert("Signup Failed", "This username is already taken. Please choose another one.");
+            return;
+        }
+    } catch (error) {
+        console.error("AsyncStorage error during lookup:", error);
+    }
+    
+    // 2. Store the new user data
+    try {
+      await AsyncStorage.setItem(username, pass); // Key: username, Value: password
+      console.log(`User ${username} successfully registered.`);
+      
+      Alert.alert("Success!", "Account created. Now let's set up your profile.", [
+        { text: "Continue", onPress: () => navigation.navigate("Details") }
+      ]);
+      
+    } catch (e) {
+      Alert.alert("Error", "Failed to save registration data. Please try again.");
+      console.error("AsyncStorage error:", e);
     }
   };
+  
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sign In</Text>
+      <Text style={styles.title}>Sign Up</Text> {/* Changed 'Sign In' to 'Sign Up' */}
       <TextInput
         style={styles.input}
-        placeholder="Username"
+        placeholder="Choose Username"
         value={username}
         onChangeText={setUsername}
+        autoCapitalize="none" // Best practice for usernames
       />
       <TextInput
         style={styles.input}
-        placeholder="Password"
+        placeholder="Choose Password"
         value={pass}
         onChangeText={setPass}
         secureTextEntry
       />
        <TouchableOpacity style={styles.button} onPress={handleSignup}>
-        <Text>Sign up</Text>
+        <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
     </View>
   );
@@ -77,4 +104,9 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 5,
   },
+  buttonText: { // Added text style for better contrast
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '700',
+  }
 });
