@@ -1,35 +1,29 @@
-import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet, ImageBackground, StatusBar } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import React, { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import React,{useState} from "react";
+import { View, Text,TextInput, TouchableOpacity, Alert, StyleSheet, ImageBackground, StatusBar } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context"
 
-const Login = ({ navigation }) => {
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
-
-  const handleLogin = async () => {
-    if (!email || !pass) {
-      Alert.alert("Login Error", "All fields are required.");
-      return;
+const SignUp = ({navigation})=>{
+  const [name,setName]=useState("")
+  const [email,setEmail] = useState("")
+  const [pass,setPass]=useState("")
+  
+  const handleSignup=async()=>{
+    if (!name||!email||!pass){
+      Alert.alert("SignUp Error", "All Fields are required.")
+      return
     }
-    try {
-      const data = await AsyncStorage.getItem("user");
-      if (!data) {
-        Alert.alert("Login Error", "No user found! Sign Up first.");
-        return;
+    try{
+      const userdata = {name,email,pass}
+      await AsyncStorage.setItem("user",JSON.stringify(userdata))
+      Alert.alert("Success", "Account created successfully! Please log in.")
+      navigation.navigate("Login") 
       }
-      const user = JSON.parse(data);
-      if (user.email === email && user.pass === pass) {
-        Alert.alert("Success", "Login Successful!");
-        navigation.navigate("HomeScreen");
-      } else {
-        Alert.alert("Login Error", "Wrong Email or Password.");
-      }
-    } catch (error) {
-      console.error("Login Failed:", error); 
-      Alert.alert("Login Error", "Login Failed due to an unexpected issue.");
+    catch(error){
+      console.error("SignUp Failed:", error);
+      Alert.alert("SignUp Error", "SignUp Failed due to an unexpected issue.")
     }
-  };
+  }
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -39,13 +33,28 @@ const Login = ({ navigation }) => {
         style={styles.backgroundPlaceholder}
         resizeMode="cover"
       >
+        {/* Top curve structure is now identical to Login */}
         <View style={styles.topCurveContainer}>
           <View style={styles.topCurve}></View>
           <Text style={styles.airaText}>AIRA</Text>
         </View>
 
         <View style={styles.contentContainer}>
-          <Text style={styles.welcomeText}>Welcome Back</Text>
+          {/* Updated text for the SignUp page */}
+          <Text style={styles.welcomeText}>Create Your Account</Text>
+
+          {/* New Name Input field */}
+          <View style={styles.inputGroup}>
+            <Text style={styles.inputLabel}>Name</Text>
+            <TextInput
+              style={styles.textInput}
+              value={name}
+              onChangeText={setName}
+              placeholder="Enter your Name"
+              placeholderTextColor="#999" 
+              autoCapitalize="words"
+            />
+          </View>
 
           <View style={styles.inputGroup}>
             <Text style={styles.inputLabel}>Email</Text>
@@ -72,12 +81,12 @@ const Login = ({ navigation }) => {
             />
           </View>
 
-          <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
-            <Text style={styles.loginButtonText}>Login</Text>
+          <TouchableOpacity onPress={handleSignup} style={styles.signupButton}>
+            <Text style={styles.signupButtonText}>Sign Up</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.navigate("SignUp")} style={styles.signUpLink}>
-            <Text style={styles.signUpText}>Don't have an account? <Text style={styles.createNowText}>Create Now.</Text></Text>
+          <TouchableOpacity onPress={() => navigation.navigate("Login")} style={styles.signInLink}>
+            <Text style={styles.signInText}>Already Have an account? <Text style={styles.signInNowText}>Sign in here.</Text></Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
@@ -156,7 +165,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.2)',
   },
-  loginButton: {
+  signupButton: {
     backgroundColor: '#F8F8F8',
     paddingVertical: 18,
     borderRadius: 15,
@@ -168,23 +177,23 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 8,
   },
-  loginButtonText: {
+  signupButtonText: {
     color: '#2C2C2C',
     fontSize: 18,
     fontWeight: 'bold',
   },
-  signUpLink: {
+  signInLink: {
     marginTop: 25,
     alignSelf: 'center',
   },
-  signUpText: {
+  signInText: {
     color: '#F8F8F8',
     fontSize: 15,
   },
-  createNowText: {
+  signInNowText: {
     color: '#F8F8F8',
     fontWeight: 'bold',
   },
 });
 
-export default Login;
+export default SignUp

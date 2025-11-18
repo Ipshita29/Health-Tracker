@@ -1,10 +1,10 @@
 import {View,Text} from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
-const HomeScreen =()=>{
+const Meditation =()=>{
   return (
     <SafeAreaView>
-      <Text>HomeScreen</Text>
+      <Text>Meditation</Text>
     </SafeAreaView>
   )
 }
-export default HomeScreen
+export default Meditation
