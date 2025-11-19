@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React,{useState} from "react";
-import { View, Text,TextInput, TouchableOpacity, Alert, StyleSheet, ImageBackground, StatusBar } from "react-native";
+import { View, Text,TextInput, TouchableOpacity, Alert, StyleSheet, ImageBackground, StatusBar, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context"
 
 const SignUp = ({navigation})=>{
@@ -33,17 +33,18 @@ const SignUp = ({navigation})=>{
         style={styles.backgroundPlaceholder}
         resizeMode="cover"
       >
-        {/* Top curve structure is now identical to Login */}
         <View style={styles.topCurveContainer}>
           <View style={styles.topCurve}></View>
-          <Text style={styles.airaText}>AIRA</Text>
+          <Image
+            source={require('../assets/aria.png')}
+            style={styles.airaImage}
+            resizeMode="contain"
+          />
         </View>
 
         <View style={styles.contentContainer}>
-          {/* Updated text for the SignUp page */}
           <Text style={styles.welcomeText}>Create Your Account</Text>
 
-          {/* New Name Input field */}
           <View style={styles.inputGroup}>
             <Text style={styles.inputLabel}>Name</Text>
             <TextInput
@@ -123,15 +124,14 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 1000,
     transform: [{ scaleX: 1.5 }],
   },
-  airaText: {
+
+  airaImage: {
     position: 'absolute',
-    top: '30%', 
-    right: -30, 
-    fontSize: 80, 
-    fontWeight: 'bold',
-    color: '#A07C64',
-    transform: [{ rotate: '-90deg' }],
-    zIndex: 10
+    top: 20, 
+    left:258,
+    width: 150, 
+    height: 200, 
+    zIndex: 10, 
   },
   contentContainer: {
     flex: 1,
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     color: '#F8F8F8',
     fontSize: 16,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.2)',
+    borderColor: 'rgba(255, 255, 255, 1)',
   },
   signupButton: {
     backgroundColor: '#F8F8F8',

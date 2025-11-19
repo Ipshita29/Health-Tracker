@@ -1,6 +1,6 @@
-import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet, ImageBackground, StatusBar } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet, ImageBackground, StatusBar, Image, KeyboardAvoidingView, ScrollView, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Login = ({ navigation }) => {
@@ -34,53 +34,68 @@ const Login = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="light-content" backgroundColor="#2C2C2C" /> 
-      <ImageBackground 
-        source={require('../assets/background.png')} 
-        style={styles.backgroundPlaceholder}
-        resizeMode="cover"
+      
+      <KeyboardAvoidingView
+        style={styles.keyboardAvoidingContainer}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <View style={styles.topCurveContainer}>
-          <View style={styles.topCurve}></View>
-          <Text style={styles.airaText}>AIRA</Text>
-        </View>
-
-        <View style={styles.contentContainer}>
-          <Text style={styles.welcomeText}>Welcome Back</Text>
-
-          <View style={styles.inputGroup}>
-            <Text style={styles.inputLabel}>Email</Text>
-            <TextInput
-              style={styles.textInput}
-              value={email}
-              onChangeText={setEmail}
-              placeholder="Enter your email"
-              placeholderTextColor="#999" 
-              keyboardType="email-address"
-              autoCapitalize="none"
+        <ImageBackground 
+          source={require('../assets/background.png')} 
+          style={styles.backgroundPlaceholder}
+          resizeMode="cover"
+        >
+          <View style={styles.topCurveContainer}>
+            <View style={styles.topCurve}></View>
+            <Image
+              source={require('../assets/aria.png')}
+              style={styles.airaImage}
+              resizeMode="contain"
             />
           </View>
 
-          <View style={styles.inputGroup}>
-            <Text style={styles.inputLabel}>Password</Text>
-            <TextInput
-              style={styles.textInput}
-              value={pass}
-              onChangeText={setPass}
-              placeholder="Enter your password"
-              placeholderTextColor="#999"
-              secureTextEntry={true}
-            />
-          </View>
+          <ScrollView 
+            contentContainerStyle={styles.scrollContent}
+            keyboardShouldPersistTaps="handled"
+          >
+            <View style={styles.contentContainer}>
+              <Text style={styles.welcomeText}>Welcome Back</Text>
 
-          <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
-            <Text style={styles.loginButtonText}>Login</Text>
-          </TouchableOpacity>
+              <View style={styles.inputGroup}>
+                <Text style={styles.inputLabel}>Email</Text>
+                <TextInput
+                  style={styles.textInput}
+                  value={email}
+                  onChangeText={setEmail}
+                  placeholder="Enter your email"
+                  placeholderTextColor="#999" 
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                />
+              </View>
 
-          <TouchableOpacity onPress={() => navigation.navigate("SignUp")} style={styles.signUpLink}>
-            <Text style={styles.signUpText}>Don't have an account? <Text style={styles.createNowText}>Create Now.</Text></Text>
-          </TouchableOpacity>
-        </View>
-      </ImageBackground>
+              <View style={styles.inputGroup}>
+                <Text style={styles.inputLabel}>Password</Text>
+                <TextInput
+                  style={styles.textInput}
+                  value={pass}
+                  onChangeText={setPass}
+                  placeholder="Enter your password"
+                  placeholderTextColor="#999"
+                  secureTextEntry={true}
+                />
+              </View>
+
+              <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
+                <Text style={styles.loginButtonText}>Login</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => navigation.navigate("SignUp")} style={styles.signUpLink}>
+                <Text style={styles.signUpText}>Don't have an account? <Text style={styles.createNowText}>Create Now.</Text></Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </ImageBackground>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
@@ -90,9 +105,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#2C2C2C', 
   },
+  keyboardAvoidingContainer: {
+    flex: 1, // Must take full space
+  },
   backgroundPlaceholder: {
     flex: 1,
-    justifyContent: 'flex-end',
     backgroundColor: '#2C2C2C',
   },
   topCurveContainer: {
@@ -114,24 +131,25 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 1000,
     transform: [{ scaleX: 1.5 }],
   },
-  airaText: {
+  airaImage: {
     position: 'absolute',
-    top: '30%', 
-    right: -30, 
-    fontSize: 80, 
-    fontWeight: 'bold',
-    color: '#A07C64',
-    transform: [{ rotate: '-90deg' }],
-    zIndex: 10
+    top: 20, 
+    left:258,
+    width: 150, 
+    height: 200, 
+    zIndex: 10,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    justifyContent: 'flex-end', 
   },
   contentContainer: {
-    flex: 1,
-    justifyContent: 'flex-end', 
+    marginTop: '30%', 
     paddingHorizontal: 30,
     paddingBottom: 40,
   },
   welcomeText: {
-    fontSize: 32,
+    fontSize: 35,
     fontWeight: 'bold',
     color: '#F8F8F8',
     marginBottom: 40,
@@ -154,7 +172,7 @@ const styles = StyleSheet.create({
     color: '#F8F8F8',
     fontSize: 16,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.2)',
+    borderColor: 'rgba(255, 255, 255, 1)',
   },
   loginButton: {
     backgroundColor: '#F8F8F8',
