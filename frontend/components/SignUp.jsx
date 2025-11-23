@@ -17,7 +17,7 @@ const SignUp = ({navigation})=>{
       const userdata = {name,email,pass}
       await AsyncStorage.setItem("user",JSON.stringify(userdata))
       Alert.alert("Success", "Account created successfully! Please log in.")
-      navigation.navigate("Login") 
+      navigation.navigate("HomeScreen") 
       }
     catch(error){
       console.error("SignUp Failed:", error);
