@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,10 +8,40 @@ import {
   Image,
   ScrollView,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Calendar } from "react-native-calendars";
+import { useFocusEffect } from "@react-navigation/native";
 
 const HomeScreen = ({ navigation }) => {
+  const [drinkCount, setDrinkCount] = useState(0);
+  const [goalBottles, setGoalBottles] = useState(0);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      loadWaterData();
+    }, [])
+  );
+
+  const loadWaterData = async () => {
+    const savedGoal = await AsyncStorage.getItem("GOAL_BOTTLES");
+    const savedCount = await AsyncStorage.getItem("DRINK_COUNT");
+
+    if (savedGoal) setGoalBottles(JSON.parse(savedGoal));
+    if (savedCount) setDrinkCount(JSON.parse(savedCount));
+  };
+
+  const addBottleFromHome = async () => {
+    const updated = drinkCount + 1;
+    setDrinkCount(updated);
+
+    await AsyncStorage.setItem("DRINK_COUNT", JSON.stringify(updated));
+
+    if (updated === goalBottles) {
+      alert("🎉 Water Goal Completed!\nGreat job staying hydrated!");
+    }
+  };
+
   return (
     <ImageBackground
       source={require("../assets/background2.png")}
@@ -19,7 +49,8 @@ const HomeScreen = ({ navigation }) => {
     >
       <SafeAreaView style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-      
+
+          {/* NAVBAR */}
           <View style={styles.navbar}>
             <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
               <Image
@@ -47,14 +78,25 @@ const HomeScreen = ({ navigation }) => {
           </TouchableOpacity>
 
           {/* WATER INTAKE */}
-          <TouchableOpacity onPress={() => navigation.navigate("WaterIntake")}>
-            <View style={styles.card}>
+          <View style={styles.card}>
+            <TouchableOpacity onPress={() => navigation.navigate("WaterIntake")}>
               <Text style={styles.cardTitle}>Water Intake</Text>
-              <View style={styles.circle}>
-                <Text style={{ fontWeight: "600" }}>0 / 8 cups</Text>
-              </View>
+            </TouchableOpacity>
+
+            <View style={styles.circle}>
+              <Text style={{ fontWeight: "700", fontSize: 20 }}>
+                {drinkCount} / {goalBottles || 0}
+              </Text>
+              <Text style={{ fontSize: 14 }}>bottles</Text>
             </View>
-          </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.addCupBtn}
+              onPress={addBottleFromHome}
+            >
+              <Text style={styles.addCupText}>+ Add 1 Bottle</Text>
+            </TouchableOpacity>
+          </View>
 
           {/* MEDITATION */}
           <TouchableOpacity onPress={() => navigation.navigate("Meditation")}>
@@ -99,6 +141,7 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     marginBottom: 20,
   },
+
   cardTitle: {
     fontSize: 18,
     fontWeight: "700",
@@ -107,15 +150,29 @@ const styles = StyleSheet.create({
   },
 
   circle: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
+    width: 130,
+    height: 130,
+    borderRadius: 65,
     borderWidth: 6,
-    borderColor: "#f87a3b",
+    borderColor: "#d69676ff",
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
     backgroundColor: "#f2faff",
+    marginBottom: 10,
+  },
+
+  addCupBtn: {
+    backgroundColor: "#ebb6858d",
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+    borderRadius: 10,
+    alignSelf: "center",
+  },
+
+  addCupText: {
+    color: "white",
+    fontWeight: "700",
   },
 
   meditationText: {
@@ -132,6 +189,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 20,
   },
+
   chatText: {
     color: "white",
     fontSize: 16,

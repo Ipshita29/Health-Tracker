@@ -50,10 +50,10 @@ const CalendarScreen = () => {
 
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: "💊 Medicine Reminder",
+        title: "Medicine Reminder",
         body: `Time to take: ${med}`,
       },
-      trigger: { date: finalDateTime },
+      trigger: finalDateTime,
     });
 
     alert("Reminder set!");
@@ -61,20 +61,19 @@ const CalendarScreen = () => {
 
   const onTimeChange = (event, selectedTime) => {
     const chosen = selectedTime || time;
-    setShowTimePicker(Platform.OS === "ios");
+    setShowTimePicker(false);
     setTime(chosen);
   };
 
   return (
     <ImageBackground
-      source={require("../assets/background2.png")}
+      source={require("../assets/medicine.png")}
       style={styles.bg}
     >
       <SafeAreaView style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text style={styles.header}>Set Your Medicine Reminder</Text>
 
-          {/* MEDICINE NAME */}
           <View style={styles.card}>
             <Text style={styles.label}>Medicine Name</Text>
             <TextInput
@@ -112,15 +111,6 @@ const CalendarScreen = () => {
               style={styles.timeBtn}
               onPress={() => setShowTimePicker(true)}
             >
-              <Text style={styles.timeText}>
-                {time.toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </Text>
-            </TouchableOpacity>
-
-            {showTimePicker && (
               <DateTimePicker
                 value={time}
                 mode="time"
@@ -128,7 +118,9 @@ const CalendarScreen = () => {
                 display="default"
                 onChange={onTimeChange}
               />
-            )}
+            </TouchableOpacity>
+
+            
           </View>
 
           <TouchableOpacity style={styles.submitBtn} onPress={scheduleNotification}>
@@ -144,7 +136,6 @@ const CalendarScreen = () => {
 
 export default CalendarScreen;
 
-// ------------------------------------------------------
 
 const styles = StyleSheet.create({
   bg: {
@@ -164,7 +155,7 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    backgroundColor: "#ffffff33", // SAME AS HOME SCREEN
+    backgroundColor: "#68636373", // SAME AS HOME SCREEN
     borderRadius: 14,
     padding: 15,
     marginBottom: 20,
@@ -194,11 +185,11 @@ const styles = StyleSheet.create({
 
   timeText: {
     color: "white",
-    fontSize: 16,
+    fontSize: 20,
   },
 
   submitBtn: {
-    backgroundColor: "#f87a3b",
+    backgroundColor: "#ca7245ff",
     padding: 15,
     borderRadius: 12,
     alignItems: "center",
