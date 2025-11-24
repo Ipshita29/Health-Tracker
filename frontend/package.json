@@ -28,7 +28,9 @@
     "react-native-svg": "^15.13.0",
     "react-native-video": "^6.18.0",
     "expo-av": "~16.0.7",
-    "expo-video": "~3.0.14"
+    "expo-video": "~3.0.14",
+    "expo-notifications": "~0.32.13",
+    "@react-native-community/datetimepicker": "8.4.4"
   },
   "private": true
 }

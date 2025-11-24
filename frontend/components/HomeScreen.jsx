@@ -35,7 +35,7 @@ const HomeScreen = ({ navigation }) => {
               <Text style={styles.cardTitle}>Your Calendar</Text>
 
               <Calendar
-                onDayPress={() => navigation.navigate("Calender")}
+                onDayPress={() => navigation.navigate("Calendar")}
                 theme={{
                   calendarBackground: "transparent",
                   dayTextColor: "white",
