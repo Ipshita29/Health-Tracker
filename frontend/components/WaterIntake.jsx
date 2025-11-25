@@ -50,7 +50,7 @@ const WaterIntake = () => {
     await AsyncStorage.setItem("DRINK_COUNT", JSON.stringify(updated));
 
     if (updated === goalBottles) {
-      Alert.alert("🎉 Goal Completed!", "Great job! Stay hydrated 💧");
+      Alert.alert("Goal Completed!", "Great job! Stay hydrated ");
     }
   };
 
@@ -64,11 +64,11 @@ const WaterIntake = () => {
   };
 
   const hydrationTips = [
-    "Drink 1 bottle right after waking up 🌅",
-    "Drink 1 bottle before lunch 🍱",
-    "Drink 1 bottle after lunch 🍛",
-    "Drink water during mid-evening ☀️",
-    "Take small sips before bed 🌙",
+    "Drink 1 bottle right after waking up ",
+    "Drink 1 bottle before lunch ",
+    "Drink 1 bottle after lunch ",
+    "Drink water during mid-evening ",
+    "Take small sips before bed ",
   ];
 
   return (
@@ -216,10 +216,11 @@ const styles = StyleSheet.create({
     color: "white",
     opacity: 0.9,
     marginBottom: 6,
+    fontSize: 18
   },
 
   tipFooter: {
-    marginTop: 10,
+    marginTop: 15,
     color: "#ffe0b3",
     fontWeight: "600",
   },

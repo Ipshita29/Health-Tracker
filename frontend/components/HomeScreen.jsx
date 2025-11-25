@@ -24,12 +24,13 @@ const HomeScreen = ({ navigation }) => {
   );
 
   const loadWaterData = async () => {
-    const savedGoal = await AsyncStorage.getItem("GOAL_BOTTLES");
-    const savedCount = await AsyncStorage.getItem("DRINK_COUNT");
+  const savedGoal = await AsyncStorage.getItem("GOAL_BOTTLES");
+  const savedCount = await AsyncStorage.getItem("DRINK_COUNT");
 
-    if (savedGoal) setGoalBottles(JSON.parse(savedGoal));
-    if (savedCount) setDrinkCount(JSON.parse(savedCount));
-  };
+  setGoalBottles(savedGoal ? JSON.parse(savedGoal) : 0);
+  setDrinkCount(savedCount ? JSON.parse(savedCount) : 0);
+};
+
 
   const addBottleFromHome = async () => {
     const updated = drinkCount + 1;
