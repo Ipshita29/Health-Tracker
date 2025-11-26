@@ -114,7 +114,7 @@ const HomeScreen = ({ navigation }) => {
             style={styles.chatbotBtn}
             onPress={() => navigation.navigate("AiChatbot")}
           >
-            <Text style={styles.chatText}>AI Chatbot</Text>
+            <Text style={styles.chatText}>Ask AIRA</Text>
           </TouchableOpacity>
 
         </ScrollView>

@@ -9,7 +9,6 @@ const Meditation = () => {
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const timerRef = useRef(null);
 
-  // Fullscreen video player
   const player = useVideoPlayer(
     require("../assets/meditation.mp4"),
     (player) => {
@@ -18,25 +17,20 @@ const Meditation = () => {
     }
   );
 
-  // Timer countdown
   useEffect(() => {
     if (isRunning && timeLeft > 0) {
-      timerRef.current = setInterval(() => {
-        setTimeLeft((prev) => prev - 1);
-      }, 1000);
+      timerRef.current = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
     } else if (timeLeft === 0) {
       setIsRunning(false);
-      Alert.alert("Meditation Complete", "Great job!");
+      Alert.alert("Meditation Complete", "Great job staying calm 🧘‍♀️");
     }
-
     return () => clearInterval(timerRef.current);
   }, [isRunning, timeLeft]);
 
-  // Circle breathing animation
   const startAnimation = () => {
     Animated.loop(
       Animated.sequence([
-        Animated.timing(scaleAnim, { toValue: 1.5, duration: 4000, useNativeDriver: true }),
+        Animated.timing(scaleAnim, { toValue: 1.65, duration: 4000, useNativeDriver: true }),
         Animated.timing(scaleAnim, { toValue: 1, duration: 4000, useNativeDriver: true }),
       ])
     ).start();
@@ -47,7 +41,6 @@ const Meditation = () => {
     scaleAnim.setValue(1);
   };
 
-  // Start, Stop, Reset functions
   const startTimer = () => {
     setIsRunning(true);
     startAnimation();
@@ -59,22 +52,21 @@ const Meditation = () => {
     clearInterval(timerRef.current);
   };
 
-  // Switch inhale/exhale
   useEffect(() => {
     if (isRunning) {
-      const interval = setInterval(() => {
+      const switcher = setInterval(() => {
         setPhase((p) => (p === "Inhale" ? "Exhale" : "Inhale"));
       }, 4000);
-      return () => clearInterval(interval);
+      return () => clearInterval(switcher);
     }
   }, [isRunning]);
 
   return (
     <View style={styles.container}>
-      {/* Background video */}
+      {/* Full-screen Video */}
       <VideoView player={player} style={styles.video} resizeMode="cover" />
 
-      {/* UI Overlay */}
+      {/* UI overlay */}
       <View style={styles.overlay}>
         <Text style={styles.title}>Breathing Meditation</Text>
         <Text style={styles.timer}>{timeLeft}s</Text>
@@ -99,16 +91,18 @@ const Meditation = () => {
   );
 };
 
-// STYLES
+export default Meditation;
+
+// ✨ Styling
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#000" },
 
   video: {
     position: "absolute",
     top: 0,
+    bottom: 0,
     left: 0,
     right: 0,
-    bottom: 0,
     width: "100%",
     height: "100%",
   },
@@ -118,53 +112,54 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 20,
-    backgroundColor: "rgba(0,0,0,0.35)",
+    backgroundColor: "rgba(0,0,0,0.25)", // subtle mist not too dark
   },
 
   title: {
-    fontSize: 34,
+    fontSize: 30,
     fontWeight: "700",
     color: "#fff",
-    marginBottom: 20,
-    fontFamily: "Helvetica",
+    marginBottom: 12,
   },
 
   timer: {
-    fontSize: 30,
+    fontSize: 28,
     color: "#fff",
-    marginBottom: 40,
-    fontFamily: "Helvetica Neue",
+    marginBottom: 32,
   },
 
   circle: {
-    width: 170,
-    height: 170,
-    borderRadius: 85,
-    backgroundColor: "rgba(255,255,255,0.2)",
+    width: 190,
+    height: 190,
+    borderRadius: 95,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 80,
+    marginBottom: 70,
+
+    // glowing breathing orb
+    backgroundColor: "rgba(255,255,255,0.15)",
+    borderWidth: 6,
+    borderColor: "rgba(235,182,133,0.65)", // warm beige theme
   },
 
   phase: {
-    fontSize: 20,
+    fontSize: 22,
+    fontWeight: "600",
     color: "#fff",
   },
 
+  buttons: { marginTop: 10 },
+
   button: {
-    backgroundColor: "rgba(255,255,255,0.25)",
-    padding: 15,
-    borderRadius: 12,
-    width: 110,
-    alignItems: "center",
+    backgroundColor: "#ebb685b5", // same warm theme as other pages
+    paddingVertical: 13,
+    paddingHorizontal: 30,
+    borderRadius: 14,
   },
 
   buttonText: {
-    color: "#fff",
+    color: "white",
     fontSize: 18,
-    fontFamily: "Helvetica",
-    fontWeight: "600",
+    fontWeight: "700",
   },
 });
-
-export default Meditation;
