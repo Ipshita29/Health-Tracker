@@ -7,11 +7,9 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
-  Alert,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-const pastelColors = ["#FFE7C7", "#FFCCCC", "#E6FFCC", "#D6E4FF", "#FFF6C2", "#FFD9E8"];
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const NoteTaking = () => {
   const [thought, setThought] = useState("");
@@ -28,7 +26,12 @@ const NoteTaking = () => {
 
   const saveNote = async () => {
     if (!thought.trim()) return;
-    const newNote = { id: Date.now(), text: thought.trim(), color: pastelColors[Math.floor(Math.random() * pastelColors.length)] };
+    const newNote = {
+      id: Date.now(),
+      text: thought.trim(),
+      color: "#c7a99ec8",
+      rotate: Math.random() > 0.5 ? "-2deg" : "2deg",
+    };
     const updated = [...notes, newNote];
     setNotes(updated);
     await AsyncStorage.setItem("NOTES_LIST", JSON.stringify(updated));
@@ -43,30 +46,31 @@ const NoteTaking = () => {
 
   return (
     <ImageBackground source={require("../assets/notes.png")} style={styles.bg}>
+      <SafeAreaView>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 40 }}>
-        
-        <Text style={styles.title}>Write it Down</Text>
-        <Text style={styles.sub}>Type what’s bothering you...</Text>
 
+        <Text style={styles.title}>Let's Declutter</Text>
+        <Text style={styles.sub}>Write your thoughts, hold to delete...</Text>
+        
         <TextInput
           value={thought}
           onChangeText={setThought}
-          placeholder="Write here..."
-          placeholderTextColor="#bdbdbd"
+          placeholder="Let it out here..."
+          placeholderTextColor="#d8d8d8"
           style={styles.input}
           multiline
         />
-
         <TouchableOpacity style={styles.saveBtn} onPress={saveNote}>
-          <Text style={styles.saveBtnText}>Save Thought</Text>
+          <Text style={styles.saveBtnText}> Save Thought </Text>
         </TouchableOpacity>
 
         <View style={styles.grid}>
+
           {notes.map((note) => (
             <TouchableOpacity
               key={note.id}
               onLongPress={() => deleteNote(note.id)}
-              style={[styles.stickyNote, { backgroundColor: note.color }]}
+              style={[styles.stickyNote, { backgroundColor: note.color, transform: [{ rotate: note.rotate }] }]}
             >
               <Text style={styles.noteText}>{note.text}</Text>
             </TouchableOpacity>
@@ -74,6 +78,7 @@ const NoteTaking = () => {
         </View>
 
       </ScrollView>
+      </SafeAreaView>
     </ImageBackground>
   );
 };
@@ -81,38 +86,64 @@ const NoteTaking = () => {
 export default NoteTaking;
 
 const styles = StyleSheet.create({
-  bg: { flex: 1, padding: 18 },
-  title: { color: "white", fontSize: 26, fontWeight: "700", marginBottom: 4 },
-  sub: { color: "#fff", opacity: 0.9, marginBottom: 12 },
-  input: {
-    backgroundColor: "rgba(0,0,0,0.4)",
+  bg: { flex: 1, padding: 20 },
+  title: {
+    fontSize: 28,
+    fontWeight: "800",
     color: "white",
-    borderRadius: 12,
-    padding: 15,
-    minHeight: 110,
+    marginTop: 10,
+    textShadowColor: "#00000070",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 6,
+  },
+  sub: {
+    fontSize: 18,
+    color: "#fff",
+    marginTop: 4,
+    opacity: 0.88,
+    marginBottom: 6,
+  },
+  input: {
+    backgroundColor: "rgba(59, 58, 58, 0.31)",
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.91)",
+    color: "white",
+    borderRadius: 16,
+    padding: 16,
+    minHeight: 230,
     fontSize: 16,
-    marginBottom: 12,
+    marginBottom: 16,
   },
   saveBtn: {
-    backgroundColor: "#ebb685",
+    backgroundColor: "#d2af8ff1",
     paddingVertical: 12,
-    borderRadius: 12,
+    borderRadius: 14,
     alignItems: "center",
-    marginBottom: 18,
+    alignSelf: "center",
+    width: "70%",
+    marginBottom: 25,
   },
-  saveBtnText: { color: "white", fontSize: 17, fontWeight: "700" },
+  saveBtnText: {
+    color: "white",
+    fontWeight: "600",
+    fontSize: 17,
+  },
   grid: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 10,
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
+    gap: 12,
   },
   stickyNote: {
-    width: "45%",
-    minHeight: 100,
-    borderRadius: 12,
+    width: "46%",
+    minHeight: 110,
+    borderRadius: 14,
     padding: 12,
-    elevation: 2,
   },
-  noteText: { fontWeight: "600", fontSize: 15, color: "#222" },
+  noteText: {
+    fontSize: 15,
+    fontWeight: "600",
+    color: "#222",
+    lineHeight: 19,
+  }
 });
