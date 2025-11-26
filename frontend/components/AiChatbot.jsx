@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { GEMINI_API_KEY } from "@env";
+import { OPENROUTER_KEY } from "@env";
 
 export default function AiChatbot() {
   const [question, setQuestion] = useState("");
@@ -10,54 +10,41 @@ export default function AiChatbot() {
   const askGemini = async () => {
     if (!question.trim()) return;
 
-    // show user message instantly
+    // show user's message
     setMessages((prev) => [...prev, { from: "user", text: question }]);
 
     try {
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            contents: [
-              {
-                parts: [
-                  {
-                    text: `You are a professional medical assistant. Be accurate, polite and helpful. 
-Avoid prescribing medications and encourage consulting a doctor only when truly necessary.
-Question: ${question}`,
-                  },
-                ],
-              },
-            ],
-          }),
-        }
-      );
+      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${OPENROUTER_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "openai/gpt-4o-mini", // BEST for chatting + medical Q&A
+          messages: [
+            {
+              role: "system",
+              content:
+                "You are a medical assistant. Answer politely and medically based on general health knowledge. Do not prescribe medications or dosages. Encourage consulting a doctor only when necessary.",
+            },
+            { role: "user", content: question },
+          ],
+        }),
+      });
 
       const data = await response.json();
+      const reply =
+        data?.choices?.[0]?.message?.content ??
+        data?.choices?.[0]?.message ??
+        data?.choices?.[0]?.text ??
+        "I couldn't generate a response.";
 
-      // extract reply safely (supports all Gemini formats)
-      let reply = "I couldn't generate a response.";
-
-      if (data?.candidates?.[0]?.content?.parts?.[0]?.text) {
-        reply = data.candidates[0].content.parts[0].text;
-      } else if (data?.candidates?.[0]?.content?.parts) {
-        reply = data.candidates[0].content.parts.map((p) => p.text).join("\n");
-      } else if (data?.text) {
-        reply = data.text;
-      } else if (data?.candidates?.[0]?.text) {
-        reply = data.candidates[0].text;
-      }
-
+      // show bot reply
       setMessages((prev) => [...prev, { from: "bot", text: reply }]);
-
     } catch (err) {
-      console.log("Gemini Error:", err);
-      setMessages((prev) => [
-        ...prev,
-        { from: "bot", text: "⚠️ Something went wrong. Try again later." },
-      ]);
+      console.log("AI Error:", err);
+      setMessages((prev) => [...prev, { from: "bot", text: "⚠ Something went wrong. Try again later." }]);
     }
 
     setQuestion(""); // clear input box
@@ -65,9 +52,7 @@ Question: ${question}`,
 
   return (
     <SafeAreaView style={{ flex: 1, padding: 15 }}>
-      <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 10 }}>
-        AI Health Chatbot
-      </Text>
+      <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 10 }}>AI Health Chatbot</Text>
 
       <ScrollView style={{ flex: 1, marginVertical: 10 }}>
         {messages.map((msg, index) => (
@@ -101,6 +86,7 @@ Question: ${question}`,
             borderRadius: 10,
           }}
         />
+
         <TouchableOpacity
           onPress={askGemini}
           style={{
