@@ -29,16 +29,16 @@ const Profile = ({ navigation }) => {
     loadUser();
   }, []);
 
-  // Logout function
   const handleLogout = async () => {
     try {
       await AsyncStorage.removeItem("loggedIn");
-
       navigation.replace("Login");
     } catch (error) {
       console.log("Error during logout:", error);
     }
   };
+
+  const initials = name ? name.charAt(0).toUpperCase() : "U";
 
   return (
     <ImageBackground
@@ -46,8 +46,12 @@ const Profile = ({ navigation }) => {
       style={styles.bg}
     >
       <View style={styles.container}>
-        <Text style={styles.title}>Welcome {name}!</Text>
-        <Text style={styles.email}>Email: {email}</Text>
+        <View style={styles.avatar}>
+          <Text style={styles.avatarText}>{initials}</Text>
+        </View>
+
+        <Text style={styles.title}>{name}</Text>
+        <Text style={styles.email}>{email}</Text>
 
         <TouchableOpacity style={styles.logoutBtn} onPress={handleLogout}>
           <Text style={styles.logoutText}>Logout</Text>
@@ -65,34 +69,71 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+
   container: {
     width: "90%",
     alignItems: "center",
-    paddingVertical: 30,
-    backgroundColor: "rgba(39, 38, 38, 0.34)",
-    borderRadius: 15,
+    paddingVertical: 35,
+    borderRadius: 20,
+    backgroundColor: "rgba(0, 0, 0, 0.13)",
+    backdropFilter: "blur(10px)",
   },
-  title: {
-    fontSize: 28,
+
+  avatar: {
+    width: 95,
+    height: 95,
+    borderRadius: 60,
+    backgroundColor: "rgba(255,255,255,0.25)",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 18,
+  },
+
+  avatarText: {
+    fontSize: 40,
     color: "#fff",
     fontWeight: "bold",
   },
+
+  title: {
+    fontSize: 26,
+    color: "#fff",
+    fontWeight: "700",
+  },
+
   email: {
     fontSize: 18,
-    color: "#fff",
-    marginTop: 25,
-    marginBottom: 20
+    color: "#e8e8e8",
+    marginTop: 8,
+    marginBottom: 22,
   },
-  logoutBtn: {
-    backgroundColor: "#9c989854",
-    paddingVertical: 12,
+
+  secondaryBtn: {
+    paddingVertical: 10,
     paddingHorizontal: 25,
-    borderRadius: 10,
-    marginTop: 20,
+    borderRadius: 12,
+    backgroundColor: "rgba(255,255,255,0.18)",
+    marginBottom: 15,
   },
+
+  secondaryBtnText: {
+    color: "#fff",
+    fontSize: 17,
+    fontWeight: "600",
+  },
+
+  logoutBtn: {
+    width: "85%",
+    paddingVertical: 14,
+    borderRadius: 14,
+    alignItems: "center",
+    backgroundColor: "#d1ab8cef",
+    elevation: 5,
+  },
+
   logoutText: {
     color: "#fff",
-    fontSize: 18,
-    fontWeight: "600",
+    fontSize: 19,
+    fontWeight: "700",
   },
 });

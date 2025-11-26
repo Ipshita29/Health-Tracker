@@ -39,7 +39,7 @@ const HomeScreen = ({ navigation }) => {
     await AsyncStorage.setItem("DRINK_COUNT", JSON.stringify(updated));
 
     if (updated === goalBottles) {
-      alert("🎉 Water Goal Completed!\nGreat job staying hydrated!");
+      alert("Water Goal Completed!\nGreat job staying hydrated!");
     }
   };
 
@@ -120,6 +120,16 @@ const HomeScreen = ({ navigation }) => {
             </View>
           </TouchableOpacity>
 
+          {/*Note Taking */}
+          <TouchableOpacity onPress={() => navigation.navigate("NoteTaking")}>
+            <View style={styles.card}>
+              <Text style={styles.cardTitle}>Note Taking</Text>
+              <Text style={styles.meditationText}>
+                Let's Declutter your mind
+              </Text>
+            </View>
+          </TouchableOpacity>
+
         </ScrollView>
       </SafeAreaView>
     </ImageBackground>
@@ -143,8 +153,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 20,
   },
-
-  // Floating Glass Ask-AIRA Button
   airaBtn: {
     backgroundColor: "rgba(91, 88, 88, 0.2)",
     paddingVertical: 8,
@@ -181,8 +189,8 @@ const styles = StyleSheet.create({
 
   waveDivider: {
     height: 3,
-    backgroundColor: "#ebb685",
-    width: "55%",
+    backgroundColor: "#ffcc9dff",
+    width: "100%",
     alignSelf: "center",
     borderRadius: 10,
     marginBottom: 20,

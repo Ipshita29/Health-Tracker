@@ -57,7 +57,7 @@ export default function AiChatbot() {
 
   return (
     <ImageBackground
-      source={require("../assets/aichatbot.png")}
+      source={require("../assets/aichatbot2.png")}
       style={styles.bg}
     >
       <SafeAreaView style={styles.container}>

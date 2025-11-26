@@ -9,6 +9,7 @@ import Profile from './components/Profile';
 import Meditaton from './components/Meditation'
 import WaterIntake from './components/WaterIntake';
 import AiChatbot from './components/AiChatbot';
+import NoteTaking from './components/NoteTaking';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -31,6 +32,7 @@ export default function App() {
         <Stack.Screen name="Meditation" component={Meditaton} options={{ headerShown: false }}/>
         <Stack.Screen name="WaterIntake" component={WaterIntake} options={{ headerShown: false }} />
         <Stack.Screen name="AiChatbot" component={AiChatbot} options={{ headerShown: false }} />
+        <Stack.Screen name="NoteTaking" component={NoteTaking} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

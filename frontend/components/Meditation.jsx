@@ -63,10 +63,8 @@ const Meditation = () => {
 
   return (
     <View style={styles.container}>
-      {/* Full-screen Video */}
       <VideoView player={player} style={styles.video} resizeMode="cover" />
 
-      {/* UI overlay */}
       <View style={styles.overlay}>
         <Text style={styles.title}>Breathing Meditation</Text>
         <Text style={styles.timer}>{timeLeft}s</Text>
@@ -93,9 +91,8 @@ const Meditation = () => {
 
 export default Meditation;
 
-// ✨ Styling
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#000" },
+  container: { flex: 1, backgroundColor: "#4e301feb" },
 
   video: {
     position: "absolute",
@@ -112,7 +109,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 20,
-    backgroundColor: "rgba(0,0,0,0.25)", // subtle mist not too dark
+    backgroundColor: "rgba(0,0,0,0.25)", 
   },
 
   title: {
@@ -135,11 +132,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 70,
-
-    // glowing breathing orb
     backgroundColor: "rgba(255,255,255,0.15)",
     borderWidth: 6,
-    borderColor: "rgba(235,182,133,0.65)", // warm beige theme
+    borderColor: "rgba(235,182,133,0.65)",
   },
 
   phase: {
@@ -151,7 +146,7 @@ const styles = StyleSheet.create({
   buttons: { marginTop: 10 },
 
   button: {
-    backgroundColor: "#ebb685b5", // same warm theme as other pages
+    backgroundColor: "#ffca98b5", 
     paddingVertical: 13,
     paddingHorizontal: 30,
     borderRadius: 14,
