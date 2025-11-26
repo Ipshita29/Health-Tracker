@@ -53,13 +53,24 @@ const HomeScreen = ({ navigation }) => {
 
           {/* NAVBAR */}
           <View style={styles.navbar}>
+            <TouchableOpacity
+              style={styles.airaBtn}
+              onPress={() => navigation.navigate("AiChatbot")}
+            >
+              <Text style={styles.airaText}>Ask AIRA</Text>
+            </TouchableOpacity>
+
             <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
-              <Image
-                source={require("../assets/Profile.png")}
-                style={styles.profileIcon}
-              />
+              <Image source={require("../assets/Profile.png")} style={styles.profileIcon} />
             </TouchableOpacity>
           </View>
+
+          {/* GREETING */}
+          <Text style={styles.greeting}>Welcome back!</Text>
+          <Text style={styles.subGreeting}>Let’s take care of your health today</Text>
+
+          {/* Decorative divider */}
+          <View style={styles.waveDivider} />
 
           {/* CALENDAR */}
           <TouchableOpacity onPress={() => navigation.navigate("Calendar")}>
@@ -109,14 +120,6 @@ const HomeScreen = ({ navigation }) => {
             </View>
           </TouchableOpacity>
 
-          {/* CHATBOT */}
-          <TouchableOpacity
-            style={styles.chatbotBtn}
-            onPress={() => navigation.navigate("AiChatbot")}
-          >
-            <Text style={styles.chatText}>Ask AIRA</Text>
-          </TouchableOpacity>
-
         </ScrollView>
       </SafeAreaView>
     </ImageBackground>
@@ -127,73 +130,122 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   bg: { flex: 1 },
-  container: { flex: 1, paddingHorizontal: 16, paddingVertical: 10 },
+
+  container: {
+    flex: 1,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+  },
 
   navbar: {
     flexDirection: "row",
-    justifyContent: "flex-end",
-    marginBottom: 15,
-  },
-  profileIcon: { width: 40, height: 40, borderRadius: 20 },
-
-  card: {
-    backgroundColor: "#ffffff33",
-    padding: 15,
-    borderRadius: 14,
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 20,
   },
 
-  cardTitle: {
-    fontSize: 18,
+  // Floating Glass Ask-AIRA Button
+  airaBtn: {
+    backgroundColor: "rgba(255,255,255,0.2)",
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.35)",
+    backdropFilter: "blur(10px)",
+  },
+  airaText: {
+    color: "white",
     fontWeight: "700",
-    marginBottom: 12,
+    fontSize: 15,
+    letterSpacing: 0.3,
+  },
+
+  profileIcon: { width: 40, height: 40, borderRadius: 20 },
+
+  greeting: {
+    fontSize: 26,
+    fontWeight: "800",
+    color: "white",
+    marginBottom: 2,
+    textShadowColor: "#00000070",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 6,
+  },
+  subGreeting: {
+    fontSize: 16,
+    color: "#fff",
+    marginBottom: 10,
+    opacity: 0.85,
+  },
+
+  waveDivider: {
+    height: 3,
+    backgroundColor: "#ebb685",
+    width: "55%",
+    alignSelf: "center",
+    borderRadius: 10,
+    marginBottom: 20,
+    opacity: 0.8,
+  },
+
+  card: {
+    backgroundColor: "rgba(255, 255, 255, 0.18)",
+    padding: 18,
+    borderRadius: 16,
+    marginBottom: 23,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.25)",
+    shadowColor: "#000",
+    shadowOpacity: 0.18,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 6,
+  },
+
+  cardTitle: {
+    fontSize: 20,
+    fontWeight: "700",
+    marginBottom: 14,
     color: "white",
   },
 
   circle: {
-    width: 130,
-    height: 130,
-    borderRadius: 65,
+    width: 140,
+    height: 140,
+    borderRadius: 70,
     borderWidth: 6,
-    borderColor: "#d69676ff",
+    borderColor: "#ebb685",
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
-    backgroundColor: "#f2faff",
-    marginBottom: 10,
+    backgroundColor: "#ffffffe6",
+    marginBottom: 12,
+    shadowColor: "#ebb685",
+    shadowOpacity: 0.65,
+    shadowRadius: 15,
+    shadowOffset: { width: 0, height: 0 },
+    elevation: 4,
   },
 
   addCupBtn: {
-    backgroundColor: "#ebb6858d",
-    paddingVertical: 10,
-    paddingHorizontal: 18,
-    borderRadius: 10,
+    backgroundColor: "#ebb685a4",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 12,
     alignSelf: "center",
+    marginTop: 5,
   },
 
   addCupText: {
     color: "white",
     fontWeight: "700",
+    fontSize: 15,
   },
 
   meditationText: {
     color: "white",
     fontSize: 15,
-    marginTop: 5,
-  },
-
-  chatbotBtn: {
-    backgroundColor: "#ebb6858d",
-    padding: 14,
-    borderRadius: 12,
-    alignItems: "center",
-    marginTop: 10,
-    marginBottom: 20,
-  },
-
-  chatText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "600",
+    marginTop: 6,
+    opacity: 0.85,
   },
 });
