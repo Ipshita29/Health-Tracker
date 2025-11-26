@@ -146,12 +146,12 @@ const styles = StyleSheet.create({
 
   // Floating Glass Ask-AIRA Button
   airaBtn: {
-    backgroundColor: "rgba(255,255,255,0.2)",
+    backgroundColor: "rgba(91, 88, 88, 0.2)",
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.35)",
+    borderColor: "rgba(255, 248, 248, 1)",
     backdropFilter: "blur(10px)",
   },
   airaText: {
@@ -190,12 +190,12 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    backgroundColor: "rgba(255, 255, 255, 0.18)",
+    backgroundColor: "rgba(91, 89, 89, 0.05)",
     padding: 18,
     borderRadius: 16,
     marginBottom: 23,
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.25)",
+    borderColor: "rgba(255, 255, 255, 1)",
     shadowColor: "#000",
     shadowOpacity: 0.18,
     shadowOffset: { width: 0, height: 3 },
