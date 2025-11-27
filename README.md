@@ -29,8 +29,9 @@ Track how many glasses you drink each day ,progress & history are saved using As
 
 ---
 ## Environment Variables
+
 - Create a .env file in the project root:
-OPENROUTER_KEY=your_openrouter_api_key_here
+  OPENROUTER_KEY=your_openrouter_api_key_here
 
 ## Why This App Is Different
 
