@@ -30,7 +30,7 @@ Track how many glasses you drink each day ,progress & history are saved using As
 ---
 ## Environment Variables
 
-- Create a .env file in the project root:
+# Create a .env file in the project root:
   OPENROUTER_KEY=your_openrouter_api_key_here
 
 ## Why This App Is Different
@@ -39,11 +39,10 @@ Unlike typical health trackers that only focus on steps and calories, this app f
 A health app that actually feels human.
 
 ## Getting Started 
-
-- Install dependencies
+# Install dependencies
 npm install
 
-- Start the app
+# Start the app
 expo start
 
 
