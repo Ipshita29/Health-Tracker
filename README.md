@@ -1,27 +1,50 @@
-# Health-Tracker 
+# AIRA-Health-Tracker 
 
-- A personal project build such that the users can keep a track of their daily health habits - such as water intake,exercise,sleep schedule and more such things designed with goal board as well to keep the track of the progress.
+- A next-gen wellness app built using React Native and Expo, focused not on basic fitness stats but on mental, emotional, and lifestyle health.
+This health tracker combines AI-powered support, calming exercises, medicine reminders, and self-reflection tools—all in one minimal & intuitive interface.
 ---
+
 ## Features
-- Add personal daily habits (exercise, water, food, sleep, and custom tasks).
-- Get reminders/notifications for each activity.
-- Mark tasks as completed to track progress.
-- Maintain streaks for consistency and motivation.
-- Simple, mobile-friendly design for easy daily use.
+
+- AI Chatbot (OpenRouter Integration)
+Powered by OpenRouter API (stored securely in .env as OPENROUTER_KEY).
+- Smart Calendar with Reminders
+Notifications are powered by Expo Notifications + Date & Time Picker.
+- Water Intake Tracker
+Track how many glasses you drink each day ,progress & history are saved using AsyncStorage for persistence.
+- 30-Second Meditation to reset your mind
+- Brain Declutter Notes ,a quick digital “thought purge”
 ---
 
 ## TECH-STACK
-The Tech-Stack I will be using includes:
-- **Frontend:** React Native
-- **Backend:** Node.js
-- **Database:** MongoDB
----
 
-## Learning Goals
-- Strengthen JavaScript & React skills
-- Understand backend with Node.js 
-- Practice full-stack integration
-- Deploy a MERN stack app
+| Tool                   | Purpose                |
+| ---------------------- | ---------------------- |
+| **React Native**       | App development        |
+| **Expo Go**            | Build & testing        |
+| **Expo Notifications** | Calendar reminders     |
+| **AsyncStorage**       | Local data persistence |
+| **OpenRouter API**     | AI chatbot             |
+| **dotenv**             | Secure API key storage |
+
+---
+## Environment Variables
+- Create a .env file in the project root:
+OPENROUTER_KEY=your_openrouter_api_key_here
+
+## Why This App Is Different
+
+Unlike typical health trackers that only focus on steps and calories, this app focuses on mind + body balance:
+A health app that actually feels human.
+
+## Getting Started 
+
+# Install dependencies
+npm install
+
+# Start the app
+expo start
+
 
   
 
