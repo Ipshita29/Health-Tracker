@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -24,21 +24,19 @@ const HomeScreen = ({ navigation }) => {
   );
 
   const loadWaterData = async () => {
-  const savedGoal = await AsyncStorage.getItem("GOAL_BOTTLES");
-  const savedCount = await AsyncStorage.getItem("DRINK_COUNT");
+    const savedGoal = await AsyncStorage.getItem("GOAL_BOTTLES");
+    const savedCount = await AsyncStorage.getItem("DRINK_COUNT");
 
-  setGoalBottles(savedGoal ? JSON.parse(savedGoal) : 0);
-  setDrinkCount(savedCount ? JSON.parse(savedCount) : 0);
-};
-
+    setGoalBottles(savedGoal ? Number(savedGoal) : 0);
+    setDrinkCount(savedCount ? Number(savedCount) : 0);
+  };
 
   const addBottleFromHome = async () => {
     const updated = drinkCount + 1;
     setDrinkCount(updated);
+    await AsyncStorage.setItem("DRINK_COUNT", updated.toString());
 
-    await AsyncStorage.setItem("DRINK_COUNT", JSON.stringify(updated));
-
-    if (updated === goalBottles) {
+    if (updated >= goalBottles && goalBottles !== 0) {
       alert("Water Goal Completed!\nGreat job staying hydrated!");
     }
   };
@@ -51,7 +49,7 @@ const HomeScreen = ({ navigation }) => {
       <SafeAreaView style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
 
-          {/* NAVBAR */}
+          {/* Navbar */}
           <View style={styles.navbar}>
             <TouchableOpacity
               style={styles.airaBtn}
@@ -61,22 +59,24 @@ const HomeScreen = ({ navigation }) => {
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
-              <Image source={require("../assets/Profile.png")} style={styles.profileIcon} />
+              <Image
+                source={require("../assets/Profile.png")}
+                style={styles.profileIcon}
+              />
             </TouchableOpacity>
           </View>
 
-          {/* GREETING */}
+          {/* Greetings */}
           <Text style={styles.greeting}>Welcome back!</Text>
-          <Text style={styles.subGreeting}>Let’s take care of your health today</Text>
-
-          {/* Decorative divider */}
+          <Text style={styles.subGreeting}>
+            Let’s take care of your health today
+          </Text>
           <View style={styles.waveDivider} />
 
-          {/* CALENDAR */}
+          {/* Calendar */}
           <TouchableOpacity onPress={() => navigation.navigate("Calendar")}>
             <View style={styles.card}>
               <Text style={styles.cardTitle}>Your Calendar</Text>
-
               <Calendar
                 onDayPress={() => navigation.navigate("Calendar")}
                 theme={{
@@ -91,15 +91,17 @@ const HomeScreen = ({ navigation }) => {
 
           {/* WATER INTAKE */}
           <View style={styles.card}>
-            <TouchableOpacity onPress={() => navigation.navigate("WaterIntake")}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("WaterIntake")}
+            >
               <Text style={styles.cardTitle}>Water Intake</Text>
             </TouchableOpacity>
 
             <View style={styles.circle}>
-              <Text style={{ fontWeight: "700", fontSize: 20 }}>
-                {drinkCount} / {goalBottles || 0}
+              <Text style={{ fontWeight: "700", fontSize: 22 }}>
+                {drinkCount} / {goalBottles}
               </Text>
-              <Text style={{ fontSize: 14 }}>bottles</Text>
+              <Text style={{ fontSize: 14, marginTop: 2 }}>bottles</Text>
             </View>
 
             <TouchableOpacity
@@ -120,12 +122,12 @@ const HomeScreen = ({ navigation }) => {
             </View>
           </TouchableOpacity>
 
-          {/*Note Taking */}
+          {/* NOTE TAKING */}
           <TouchableOpacity onPress={() => navigation.navigate("NoteTaking")}>
             <View style={styles.card}>
               <Text style={styles.cardTitle}>Note Taking</Text>
               <Text style={styles.meditationText}>
-                Let's Declutter your mind
+                Let's declutter your mind
               </Text>
             </View>
           </TouchableOpacity>
@@ -154,19 +156,17 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   airaBtn: {
-    backgroundColor: "rgba(91, 88, 88, 0.2)",
+    backgroundColor: "rgba(91, 88, 88, 0.28)",
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 20,
     borderWidth: 1,
     borderColor: "rgba(255, 248, 248, 1)",
-    backdropFilter: "blur(10px)",
   },
   airaText: {
     color: "white",
     fontWeight: "700",
     fontSize: 15,
-    letterSpacing: 0.3,
   },
 
   profileIcon: { width: 40, height: 40, borderRadius: 20 },
@@ -176,9 +176,6 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     color: "white",
     marginBottom: 2,
-    textShadowColor: "#00000070",
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 6,
   },
   subGreeting: {
     fontSize: 16,
@@ -198,16 +195,12 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    backgroundColor: "rgba(91, 89, 89, 0.05)",
+    backgroundColor: "rgba(91, 89, 89, 0.07)",
     padding: 18,
     borderRadius: 16,
     marginBottom: 23,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 1)",
-    shadowColor: "#000",
-    shadowOpacity: 0.18,
-    shadowOffset: { width: 0, height: 3 },
-    shadowRadius: 6,
+    borderColor: "rgba(255, 255, 255, 0.85)",
   },
 
   cardTitle: {
@@ -226,12 +219,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
-    backgroundColor: "#ffffffe6",
+    backgroundColor: "#ffffffd9",
     marginBottom: 12,
-    shadowColor: "#ebb685",
-    shadowOpacity: 0.65,
-    shadowRadius: 15,
-    shadowOffset: { width: 0, height: 0 },
     elevation: 4,
   },
 
