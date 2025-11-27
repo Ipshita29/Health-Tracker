@@ -40,10 +40,10 @@ A health app that actually feels human.
 
 ## Getting Started 
 
-# Install dependencies
+- Install dependencies
 npm install
 
-# Start the app
+- Start the app
 expo start
 
 
