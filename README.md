@@ -60,4 +60,5 @@ AIRA focuses on **mind + body balance**, helping users feel mentally lighter, em
 npm install
 
 ### 2️⃣ Start the app
-expo start
+cd frontend 
+npm start
